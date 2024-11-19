@@ -6,6 +6,8 @@ use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use App\Enum\TaskStatus;
+
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
@@ -24,7 +26,7 @@ class Task
     private ?\DateTimeInterface $deadline = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?TaskStatus $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?Project $project = null;
@@ -70,12 +72,12 @@ class Task
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?TaskStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(TaskStatus $status): static
     {
         $this->status = $status;
 

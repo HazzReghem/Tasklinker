@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 use App\Factory\ProjectFactory;
+use App\Factory\TaskFactory;
 
 class AppFixtures extends Fixture
 {
@@ -14,7 +15,9 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
-        ProjectFactory::createMany(2);  
+        ProjectFactory::createMany(2); 
+        TaskFactory::createMany(5); 
+
 
         $manager->flush();
     }
