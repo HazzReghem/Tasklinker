@@ -22,7 +22,7 @@ class ProjectController extends AbstractController
         $projects = $projectRepository->findAll();
 
         return $this->render('project/index.html.twig', [
-            'projects' => '$projects',
+            'projects' => $projects,
         ]);
     }
 }
