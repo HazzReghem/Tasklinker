@@ -7,6 +7,7 @@ use Doctrine\Persistence\ObjectManager;
 
 use App\Factory\ProjectFactory;
 use App\Factory\TaskFactory;
+use App\Factory\EmployeeFactory;
 
 class AppFixtures extends Fixture
 {
@@ -17,6 +18,7 @@ class AppFixtures extends Fixture
 
         ProjectFactory::createMany(2); 
         TaskFactory::createMany(5); 
+        EmployeeFactory::createMany(3);
 
 
         $manager->flush();
