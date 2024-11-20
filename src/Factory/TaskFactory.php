@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Task;
+use App\entity\Project;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 use App\Enum\TaskStatus;
 
@@ -37,6 +38,7 @@ final class TaskFactory extends PersistentProxyObjectFactory
             'description' => self::faker()->text(255),
             'status' => self::faker()->randomElement(TaskStatus::cases()),
             'title' => self::faker()->text(50),
+            'project' => ProjectFactory::random(),
         ];
     }
 

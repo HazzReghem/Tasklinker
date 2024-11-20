@@ -25,4 +25,21 @@ class ProjectController extends AbstractController
             'projects' => $projects,
         ]);
     }
+
+    #[Route('/project/{id}', name: 'project_detail')]
+    public function show(int $id, ProjectRepository $projectRepository): Response
+    {
+        $project = $projectRepository->find($id);
+
+        if (!$project) {
+            throw $this->createNotFoundException('Le projet demandé n\'existe pas.');
+        }
+
+        $tasks = $project->getTasks();
+
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
+            'tasks' => $tasks,
+        ]);
+    }
 }
