@@ -6,8 +6,9 @@
     <div class="flex-header">
         <h1>{{ project.title }}</h1>
         <div class="user-list">
-            <div class="avatar">ND</div>
-            <div class="avatar">DB</div>
+            {% for employee in project.employee %}
+                <div class="avatar"> {{ employee.firstName|slice(0, 1)|upper ~ employee.lastName|slice(0, 1)|upper }}</div>
+            {% endfor %}
         </div>
         <a class="button" href="projet-edit.html">Modifier</a>
     </div>

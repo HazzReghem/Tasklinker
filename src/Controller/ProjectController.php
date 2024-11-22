@@ -37,9 +37,12 @@ class ProjectController extends AbstractController
 
         $tasks = $project->getTasks();
 
+        $employee = $project->getEmployee();
+
         return $this->render('project/show.html.twig', [
             'project' => $project,
             'tasks' => $tasks,
+            'employee' => $employee,
         ]);
     }
 }

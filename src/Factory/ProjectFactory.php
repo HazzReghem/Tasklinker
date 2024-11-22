@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Entity\Project;
+use App\Entity\Employee;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 use App\Enum\ProjectStatus;
 

@@ -32,7 +32,6 @@ final class EmployeeFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
-        // Liste de prénoms et emails associés
         $namesToEmails = [
             'Natalie' => 'natalie@driblet.com',
             'Demi' => 'demi@driblet.com',
