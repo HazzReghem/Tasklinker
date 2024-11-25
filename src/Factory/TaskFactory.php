@@ -3,8 +3,10 @@
 namespace App\Factory;
 
 use App\Entity\Task;
-use App\entity\Project;
+use App\Entity\Project;
+use App\Entity\Employee;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Enum\TaskStatus;
 
 /**
@@ -17,7 +19,7 @@ final class TaskFactory extends PersistentProxyObjectFactory
      *
      * @todo inject services if required
      */
-    public function __construct()
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 

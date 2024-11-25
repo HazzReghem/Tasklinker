@@ -32,21 +32,14 @@ final class EmployeeFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
-        $namesToEmails = [
-            'Natalie' => 'natalie@driblet.com',
-            'Demi' => 'demi@driblet.com',
-            'Marie' => 'marie@driblet.com',
-        ];
-
-        $firstName = self::faker()->unique()->randomElement(array_keys($namesToEmails));
-        
-        // Associer le prénom sélectionné à l'email correspondant
-        $email = $namesToEmails[$firstName];
+        $firstName = self::faker()->unique()->firstName();
+        $lastName = self::faker()->unique()->lastName();
+        $email = strtolower($firstName . '.' . $lastName . '@driblet.com');
 
         return [
             'firstName' => $firstName,
             'hireDate' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'lastName' => self::faker()->unique()->randomElement(['Dillon', 'Dupont', 'Baker']),
+            'lastName' => $lastName,
             'status' => self::faker()->randomElement(EmployeeStatus::cases()),
             'email' => $email,
         ];

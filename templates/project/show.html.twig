@@ -34,7 +34,7 @@
                                     <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
                                 </div>
                                 <div class="mini-user">
-                                    DB
+                                    {{ task.employee.firstName|slice(0, 1)|upper ~ task.employee.lastName|slice(0, 1)|upper }}
                                 </div>
                             </div>
                         </a>

@@ -17,9 +17,25 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
-        ProjectFactory::createMany(2); 
-        TaskFactory::createMany(5); 
-        EmployeeFactory::createMany(3);
+        $projects = ProjectFactory::createMany(2);
+
+        // TaskFactory::createMany(5);
+
+        $employees = EmployeeFactory::new()->createMany(5);
+
+        // Créer une tâche par employé
+        foreach ($employees as $employee) {
+            $task = TaskFactory::new()->create([
+                    'employee' => $employee
+            ]);
+        }
+        
+        // Associer des employés à des projets
+        // foreach ($projects as $project) {
+        //     foreach (array_slice($employees, 0, 2) as $employee) {
+        //         $project->addEmployee($employee); 
+        //     }
+        // }
 
 
         $manager->flush();

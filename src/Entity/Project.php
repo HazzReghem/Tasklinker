@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use App\Enum\ProjectStatus;
+use App\Entity\Employee;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
@@ -26,7 +27,7 @@ class Project
     /**
      * @var Collection<int, Employee>
      */
-    #[ORM\ManyToMany(targetEntity: Employee::class, inversedBy: 'projects')]
+    #[ORM\ManyToMany(targetEntity: Employee::class, inversedBy: 'projects', cascade: ['persist'])]
     private Collection $employee;
 
     /**
@@ -37,7 +38,7 @@ class Project
 
     public function __construct()
     {
-        $this->employee = new ArrayCollection();
+        $this->employees = new ArrayCollection();
         $this->tasks = new ArrayCollection();
     }
 
@@ -82,6 +83,7 @@ class Project
     {
         if (!$this->employee->contains($employee)) {
             $this->employee->add($employee);
+            $employee->addProject($this); 
         }
 
         return $this;
