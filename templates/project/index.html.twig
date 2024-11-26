@@ -13,7 +13,12 @@
             </a>
             <div class="card-project-icons">
                 <a href="{{ path('edit_project', {'id': project.id}) }}"><i class="fa-solid fa-pen"></i></a>
-                <a href="#"><i class="fa-solid fa-trash"></i></a>
+                
+                <a href="#" onclick="document.getElementById('delete-form-{{ project.id }}').submit();"><i class="fa-solid fa-trash"></i></a>
+
+                <form id="delete-form-{{ project.id }}" method="post" action="{{ path('delete_project', {id: project.id}) }}" style="display: none;">
+                    <input type="hidden" name="_method" value="POST">
+                </form>
             </div>
         </article>
     {% endfor %}

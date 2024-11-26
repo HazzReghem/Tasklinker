@@ -96,7 +96,23 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    // TASKS FUNCTIONS
+    #[Route('/project/{id}/delete', name: 'delete_project', methods: ['POST'])]
+    public function deleteProject(int $id, ProjectRepository $projectRepository, EntityManagerInterface $em): RedirectResponse
+    {
+        $project = $projectRepository->find($id);
+
+        if (!$project) {
+            throw $this->createNotFoundException('La tâche demandée n\'existe pas.');
+        }
+
+        $em->remove($project);
+        $em->flush();
+
+        return $this->redirectToRoute('app_home');
+    }
+
+    // ----------------- TASKS FUNCTIONS ----------------------
+
     #[Route('/project/{id}/add_task', name: 'add_task')]
     public function addTask(int $id, Request $request, EntityManagerInterface $em, ProjectRepository $projectRepository): Response    {
         $project = $projectRepository->find($id);
