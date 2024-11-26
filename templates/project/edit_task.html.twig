@@ -14,12 +14,12 @@
                 {{ form_row(form.employee) }}
 
             <button class="button button-submit" type="submit">Modifier</button>
+            
+            <a href="#" class="delete-task" onclick="document.getElementById('delete-form-{{ task.id }}').submit();">
+                Supprimer la tâche
+            </a>
 
         {{ form_end(form) }}
-
-        <a href="#" class="delete-task" onclick="document.getElementById('delete-form-{{ task.id }}').submit();">
-            Supprimer la tâche
-        </a>
 
         <form id="delete-form-{{ task.id }}" method="post" action="{{ path('delete_task', {id: task.id}) }}" style="display: none;">
             <input type="hidden" name="_method" value="POST">
