@@ -21,7 +21,7 @@ class Project
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?ProjectStatus $status = null;
 
     /**
@@ -38,7 +38,7 @@ class Project
 
     public function __construct()
     {
-        $this->employees = new ArrayCollection();
+        $this->employee = new ArrayCollection();
         $this->tasks = new ArrayCollection();
     }
 

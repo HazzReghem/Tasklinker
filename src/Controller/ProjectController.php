@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use App\Repository\ProjectRepository;
 use App\Entity\Project;
+use App\Form\ProjectType;
 use App\Repository\TaskRepository;
 use App\Entity\Task;
 use App\Form\TaskType;
@@ -26,6 +27,27 @@ class ProjectController extends AbstractController
 
         return $this->render('project/index.html.twig', [
             'projects' => $projects,
+        ]);
+    }
+
+    #[Route('/project/new', name: 'add_project')]
+    public function addProject(Request $request, EntityManagerInterface $em): Response
+    {
+        $project = new Project();
+
+        $form = $this->createForm(ProjectType::class, $project);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($project);
+            $em->flush();
+
+            return $this->redirectToRoute('project_detail', ['id' => $project->getId()]);
+        }
+
+        return $this->render('project/add_project.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -48,7 +70,8 @@ class ProjectController extends AbstractController
             'employee' => $employee,
         ]);
     }
-
+    
+    // TASKS FUNCTIONS
     #[Route('/project/{id}/add_task', name: 'add_task')]
     public function addTask(int $id, Request $request, EntityManagerInterface $em, ProjectRepository $projectRepository): Response    {
         $project = $projectRepository->find($id);
