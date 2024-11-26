@@ -1,19 +1,28 @@
-{% extends 'base.html.twig' %}
+    {% extends 'base.html.twig' %}
 
-{% block title %}Gestion des droits d'accès - {{ parent() }}{% endblock %}
+    {% block title %}Gestion des droits d'accès - {{ parent() }}{% endblock %}
 
-{% block header_title %}Gestion des droits d'accès{% endblock %}
+    {% block header_title %}Gestion des droits d'accès{% endblock %}
 
-{% block content %}
-    {{ form_start(form) }}
+    {% block content %}
+        {{ form_start(form) }}
 
-            {{ form_row(form.title) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.deadline) }}
-            {{ form_row(form.status) }}
-            {{ form_row(form.employee) }}
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.deadline) }}
+                {{ form_row(form.status) }}
+                {{ form_row(form.employee) }}
 
-        <button class="button button-submit" type="submit">Modifier</button>
+            <button class="button button-submit" type="submit">Modifier</button>
 
-    {{ form_end(form) }}
-{% endblock %}
+        {{ form_end(form) }}
+
+        <a href="#" class="delete-task" onclick="document.getElementById('delete-form-{{ task.id }}').submit();">
+            Supprimer la tâche
+        </a>
+
+        <form id="delete-form-{{ task.id }}" method="post" action="{{ path('delete_task', {id: task.id}) }}" style="display: none;">
+            <input type="hidden" name="_method" value="POST">
+        </form>
+        
+    {% endblock %}
