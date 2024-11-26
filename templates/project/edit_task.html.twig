@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des droits d'accès - {{ parent() }}{% endblock %}
+
+{% block header_title %}Gestion des droits d'accès{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.deadline) }}
+            {{ form_row(form.status) }}
+            {{ form_row(form.employee) }}
+
+        <button class="button button-submit" type="submit">Modifier</button>
+
+    {{ form_end(form) }}
+{% endblock %}

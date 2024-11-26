@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use App\Repository\ProjectRepository;
 use App\Entity\Project;
-use App\Entity\TaskRepository;
+use App\Repository\TaskRepository;
 use App\Entity\Task;
 use App\Form\TaskType;
 
@@ -76,6 +76,31 @@ class ProjectController extends AbstractController
         return $this->render('project/add_task.html.twig', [
             'form' => $form->createView(),
             'project' => $project,
+        ]);
+    }
+
+    #[Route('/task/{id}/edit', name: 'edit_task')]
+    public function editTask(int $id, Request $request, EntityManagerInterface $em, TaskRepository $taskRepository): Response
+    {
+        $task = $taskRepository->find($id);
+
+        if (!$task) {
+            throw $this->createNotFoundException('La tâche demandée n\'existe pas.');
+        }
+
+        $form = $this->createForm(TaskType::class, $task);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+    
+            return $this->redirectToRoute('edit_task', ['id' => $task->getId()]);
+        }
+
+        return $this->render('project/edit_task.html.twig', [
+            'form' => $form->createView(),
+            'task' => $task,
         ]);
     }
 }

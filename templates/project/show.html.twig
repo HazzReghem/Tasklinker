@@ -26,7 +26,7 @@
             <div class="tasks-list">
                 {% for task in project.tasks %}
                     {% if task.status == enumStatus %}
-                        <a class="task" href="#">
+                        <a class="task" href="{{ path('edit_task', {'id': task.id}) }}">
                             <h3>{{ task.title }}</h3>
                             <p>{{ task.description }}</p>
                             <div class="task-infos">
