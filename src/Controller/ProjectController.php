@@ -70,7 +70,32 @@ class ProjectController extends AbstractController
             'employee' => $employee,
         ]);
     }
+
+    #[Route('/project/{id}/edit_project', name: 'edit_project')]
+    public function editProject(int $id, Request $request, EntityManagerInterface $em, ProjectRepository $projectRepository): Response
+    {
+        $project = $projectRepository->find($id);
+
+        if (!$project) {
+            throw $this->createNotFoundException('Le projet demandé n\'existe pas.');
+        }
+
+        $form = $this->createForm(ProjectType::class, $project);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
     
+            return $this->redirectToRoute('project_detail', ['id' => $project->getId()]);
+        }
+
+        return $this->render('project/edit_project.html.twig', [
+            'form' => $form->createView(),
+            'project' => $project,
+        ]);
+    }
+
     // TASKS FUNCTIONS
     #[Route('/project/{id}/add_task', name: 'add_task')]
     public function addTask(int $id, Request $request, EntityManagerInterface $em, ProjectRepository $projectRepository): Response    {
