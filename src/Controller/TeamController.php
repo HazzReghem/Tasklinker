@@ -60,7 +60,8 @@ class TeamController extends AbstractController
         }
 
         foreach ($employee->getTasks() as $task) {
-            $em->remove($task);
+            $task->setEmployee(null); 
+            $em->persist($task);
         }
 
         $em->remove($employee);

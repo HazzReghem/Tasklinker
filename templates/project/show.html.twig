@@ -33,9 +33,11 @@
                                 <div class="task-deadline">
                                     <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
                                 </div>
-                                <div class="mini-user">
+                                {% if task.employee %}
                                     {{ task.employee.firstName|slice(0, 1)|upper ~ task.employee.lastName|slice(0, 1)|upper }}
-                                </div>
+                                {% else %}
+                                    {{ '' }}
+                                {% endif %}
                             </div>
                         </a>
                     {% endif %}
