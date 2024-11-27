@@ -28,15 +28,19 @@
                     {% if task.status == enumStatus %}
                         <a class="task" href="{{ path('edit_task', {'id': task.id}) }}">
                             <h3>{{ task.title }}</h3>
-                            <p>{{ task.description }}</p>
+                            {% if task.description %}
+                                <p>{{ task.description }}</p>
+                            {% endif %}
                             <div class="task-infos">
                                 <div class="task-deadline">
-                                    <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                                    {% if task.deadline %}
+                                        <i class="fa-regular fa-calendar"></i> {{ task.deadline|date('d/m/Y') }}
+                                    {% endif %}
                                 </div>
                                 {% if task.employee %}
-                                    {{ task.employee.firstName|slice(0, 1)|upper ~ task.employee.lastName|slice(0, 1)|upper }}
-                                {% else %}
-                                    {{ '' }}
+                                    <div class="mini-user">
+                                        {{ task.employee.firstName|slice(0, 1)|upper ~ task.employee.lastName|slice(0, 1)|upper }}
+                                    </div>
                                 {% endif %}
                             </div>
                         </a>
