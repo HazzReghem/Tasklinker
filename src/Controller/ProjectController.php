@@ -12,10 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\ProjectRepository;
 use App\Entity\Project;
 use App\Form\ProjectType;
+use App\Enum\ProjectStatus;
 use App\Repository\TaskRepository;
 use App\Entity\Task;
 use App\Form\TaskType;
-
 
 
 class ProjectController extends AbstractController
@@ -23,7 +23,8 @@ class ProjectController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(ProjectRepository $projectRepository): Response
     {
-        $projects = $projectRepository->findAll();
+        // $projects = $projectRepository->findAll();
+        $projects = $projectRepository->findBy(['status' => ProjectStatus::Active->value]);
 
         return $this->render('project/index.html.twig', [
             'projects' => $projects,
@@ -34,6 +35,8 @@ class ProjectController extends AbstractController
     public function addProject(Request $request, EntityManagerInterface $em): Response
     {
         $project = new Project();
+
+        // $project->setStatus(ProjectStatus::Active->value);
 
         $form = $this->createForm(ProjectType::class, $project);
 

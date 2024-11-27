@@ -21,7 +21,7 @@ class Project
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?ProjectStatus $status = null;
 
     /**
@@ -40,6 +40,8 @@ class Project
     {
         $this->employee = new ArrayCollection();
         $this->tasks = new ArrayCollection();
+
+        $this->status = ProjectStatus::Active;
     }
 
     public function getId(): ?int
