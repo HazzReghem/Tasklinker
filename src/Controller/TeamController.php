@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use App\Repository\EmployeeRepository;
 use App\Entity\Employee;
+use App\Form\EmployeeType;
 
 class TeamController extends AbstractController
 {
@@ -21,6 +22,31 @@ class TeamController extends AbstractController
 
         return $this->render('team/index.html.twig', [
             'employees' => $employees,
+        ]);
+    }
+
+    #[Route('/employee/{id}/edit', name: 'edit_employee')]
+    public function editEmployee(int $id, Request $request, EntityManagerInterface $em): Response
+    {
+        $employee = $em->getRepository(Employee::class)->find($id);
+
+        if (!$employee) {
+            throw $this->createNotFoundException('L\'employé demandé n\'existe pas.');
+        }
+
+        $form = $this->createForm(EmployeeType::class, $employee);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+
+            return $this->redirectToRoute('app_team');
+        }
+
+        return $this->render('team/edit_employee.html.twig', [
+            'form' => $form->createView(),
+            'employee' => $employee,
         ]);
     }
 }

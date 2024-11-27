@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ employee.firstName ~ ' ' ~ employee.lastName }} - {{ parent() }}{% endblock %}
+
+{% block header_title %}{{ employee.firstName ~ ' ' ~ employee.lastName }}{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.hireDate) }}
+        {{ form_row(form.status) }}
+
+        <button class="button button-submit">Enregistrer</button>
+
+    {{ form_end(form) }}
+{% endblock %}

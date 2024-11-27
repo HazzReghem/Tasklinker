@@ -30,7 +30,7 @@
                 </td>
                 <td>{{ employee.status.value }}</td>
                 <td>
-                    <a class="button button-edit-team" href="#">
+                    <a class="button button-edit-team" href="{{ path('edit_employee', {'id': employee.id}) }}">
                         Éditer
                     </a>
                     <a class="delete-team" href="#">

@@ -23,7 +23,6 @@ class ProjectController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(ProjectRepository $projectRepository): Response
     {
-        // $projects = $projectRepository->findAll();
         $projects = $projectRepository->findBy(['status' => ProjectStatus::Active->value]);
 
         return $this->render('project/index.html.twig', [
@@ -35,8 +34,6 @@ class ProjectController extends AbstractController
     public function addProject(Request $request, EntityManagerInterface $em): Response
     {
         $project = new Project();
-
-        // $project->setStatus(ProjectStatus::Active->value);
 
         $form = $this->createForm(ProjectType::class, $project);
 
