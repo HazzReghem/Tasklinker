@@ -105,11 +105,13 @@ class ProjectController extends AbstractController
             throw $this->createNotFoundException('La tâche demandée n\'existe pas.');
         }
 
+        $project->setStatus(ProjectStatus::Archived); 
+
         foreach ($project->getTasks() as $task) {
-            $em->remove($task);
+            $task->setEmployee(null);
+            $em->persist($task);
         }
 
-        $em->remove($project);
         $em->flush();
 
         return $this->redirectToRoute('app_home');
