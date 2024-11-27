@@ -105,6 +105,10 @@ class ProjectController extends AbstractController
             throw $this->createNotFoundException('La tâche demandée n\'existe pas.');
         }
 
+        foreach ($project->getTasks() as $task) {
+            $em->remove($task);
+        }
+
         $em->remove($project);
         $em->flush();
 
