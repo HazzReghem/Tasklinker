@@ -33,9 +33,14 @@
                     <a class="button button-edit-team" href="{{ path('edit_employee', {'id': employee.id}) }}">
                         Éditer
                     </a>
-                    <a class="delete-team" href="#">
+
+                    <a href="#" class ="delete-team" onclick="document.getElementById('delete-form-{{ employee.id }}').submit();">
                         Supprimer
                     </a>
+
+                    <form id="delete-form-{{ employee.id }}" method="post" action="{{ path('delete_employee', {id: employee.id}) }}" style="display: none;">
+                        <input type="hidden" name="_method" value="POST">
+                    </form>
                 </td>
             </tr>
         {% endfor %}

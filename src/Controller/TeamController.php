@@ -49,4 +49,23 @@ class TeamController extends AbstractController
             'employee' => $employee,
         ]);
     }
+
+    #[Route('/employee/{id}/delete', name: 'delete_employee', methods: ['POST'])]
+    public function deleteEmployee(int $id, EmployeeRepository $employeeRepository, EntityManagerInterface $em): RedirectResponse
+    {
+        $employee = $employeeRepository->find($id);
+
+        if (!$employee) {
+            throw $this->createNotFoundException('La tâche demandée n\'existe pas.');
+        }
+
+        foreach ($employee->getTasks() as $task) {
+            $em->remove($task);
+        }
+
+        $em->remove($employee);
+        $em->flush();
+
+        return $this->redirectToRoute('app_team');
+    }
 }
