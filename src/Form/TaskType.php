@@ -33,7 +33,7 @@ class TaskType extends AbstractType
                 'widget' => 'single_text',
                 'label' => "Date",
                 'required' => false,
-                'empty_data' => null,
+                'empty_data' => '',
             ])
             ->add('status', ChoiceType::class, [
                 'label' => "Statut",
