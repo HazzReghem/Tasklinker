@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Enum\EmployeeStatus;
 use App\Entity\Project;
 
@@ -20,18 +22,37 @@ class Employee
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le prénom ne peut pas être vide.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le prénom ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom ne peut pas être vide.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'email ne peut pas être vide.")]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\NotBlank(message: "La date d'embauche ne peut pas être vide.")]
+    #[Assert\DateTimeInterface(message: "La date d'embauche doit être au format valide.")]
+    #[Assert\LessThanOrEqual(
+        "today",
+        message: "La date d'embauche ne peut pas être dans le futur."
+    )]
     private ?\DateTimeImmutable $hireDate = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le statut doit être défini.")]
     private ?EmployeeStatus $status = null;
 
     /**

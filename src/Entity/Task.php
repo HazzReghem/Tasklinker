@@ -6,6 +6,8 @@ use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Enum\TaskStatus;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
@@ -17,21 +19,34 @@ class Task
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le titre est requis.")]
+    #[Assert\Length(
+        max: 255, 
+        maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(
+        max: 1000,
+        maxMessage: "La description ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\DateTimeInterface(message: "La date doit être valide.")]
+    #[Assert\GreaterThan("today", message: "La date de la deadline doit être dans le futur.")]
     private ?\DateTimeInterface $deadline = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le statut est requis.")]
     private ?TaskStatus $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     private ?Project $project = null;
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
+    #[Assert\NotNull(message: "Un membre doit être assigné à cette tâche.")]
     private ?Employee $employee = null;
 
     public function getId(): ?int

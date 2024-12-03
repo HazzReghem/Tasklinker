@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Enum\ProjectStatus;
 use App\Entity\Employee;
 
@@ -19,15 +21,25 @@ class Project
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le titre du projet ne peut pas être vide.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "Le titre ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le statut du projet doit être défini.")]
     private ?ProjectStatus $status = null;
 
     /**
      * @var Collection<int, Employee>
      */
     #[ORM\ManyToMany(targetEntity: Employee::class, inversedBy: 'projects', cascade: ['persist'])]
+    #[Assert\Count(
+        min: 1,
+        minMessage: "Vous devez ajouter au moins un membre à ce projet."
+    )]
     private Collection $employee;
 
     /**
