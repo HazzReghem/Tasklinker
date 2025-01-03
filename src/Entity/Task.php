@@ -49,6 +49,9 @@ class Task
     #[Assert\NotNull(message: "Un membre doit être assigné à cette tâche.")]
     private ?Employee $employee = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    private ?Employe $employe = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -122,6 +125,18 @@ class Task
     public function setEmployee(?Employee $employee): static
     {
         $this->employee = $employee;
+
+        return $this;
+    }
+
+    public function getEmploye(): ?Employe
+    {
+        return $this->employe;
+    }
+
+    public function setEmploye(?Employe $employe): static
+    {
+        $this->employe = $employe;
 
         return $this;
     }
